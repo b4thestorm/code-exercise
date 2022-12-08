@@ -47,6 +47,21 @@ app.post('/todo', (req, res) => {
   });
 })
 
+app.delete('/todo/:todoId', (req, res) => {
+  const id = req.params.todoId ? req.params.todoId : '';
+  if (!id) {
+    return res.json({success: false, message: 'can\'t delete'});
+  }
+
+  db('todos')
+  .where('id', id)
+  .del().then(() => {
+    return res.json({success: true, message: 'todo was successfully deleted'})
+  }).catch((err) => {
+    return res.json({success: false, message: 'An error occurred, please try again later.'});
+  })
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

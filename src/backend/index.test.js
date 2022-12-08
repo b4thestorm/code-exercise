@@ -1,5 +1,5 @@
 const { withDbHelper } = require('./repository/db-helper');
-const { listTables } = require('./hello');
+const { listTables } = require('./index');
 
 describe('some feature', () => {
   withDbHelper();

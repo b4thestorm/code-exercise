@@ -32,7 +32,7 @@ const HomePage = () => {
     .then(res => {
       setTodos(res.data)
     })
-  })
+  }, [todos])
 
 
   const submitForm = (data) => {

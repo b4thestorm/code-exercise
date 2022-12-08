@@ -2,17 +2,19 @@ import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@mui/styles';
 import { Formik, Form } from "formik";
 import { Box, TextField, Typography, Button} from '@material-ui/core';
+import TodoList from '../components/List'
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '1236px'
   },
   formField: {
     height: '64px',
     width: '325px',
-    marginRight: '50px',
   },
   submitButton: {
     marginLeft: '50px',
@@ -22,21 +24,18 @@ const useStyles = makeStyles(theme => ({
 const HomePage = () => {
   const classes = useStyles();
 
-  useEffect(() => {
-
-  }, [])
-
   return (
      <Box className={classes.container}>
+        <Typography variant="h1" >TodoList</Typography>
         <Formik
-         initialValues={{ item: "", status: "active"}}
+         initialValues={{ description: "", status: "active"}}
           onSubmit={async (values) => {
           await new Promise((resolve) => setTimeout(resolve, 500));
           alert(JSON.stringify(values, null, 2));
           }}
         >
         {({ values, errors, handleChange, handleSubmit}) => (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} >
           <TextField
             id="filled-hidden-label-small"
             name="item"
@@ -49,6 +48,7 @@ const HomePage = () => {
         </Form>
         )}
        </Formik>
+       <TodoList/>
     </Box>
   );
 };

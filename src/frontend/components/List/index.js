@@ -1,29 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
-import axios from 'axios';
-import ListItemButton from '@mui/material/ListItemButton';
-import { List, ListItem, ListItemText, Typography, Button} from '@material-ui/core';
+import { List, ListItem, ListItemText, Button} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
 
 }));
 
-const TodoList = () => {
+const TodoList = ( {items} ) => {
   const classes = useStyles();
-  const [todos, setTodos] = useState([])
-
-  useEffect(() => {
-    axios.get(`http://localhost:4000/todos`)
-    .then(res => {
-      console.log(res.data);
-      setTodos(res.data)
-    })
-  }, [])
-
-
   return (
     <List sx={{ maxWidth: 360, bgcolor: 'background.paper' }}>
-    {todos.map((value) => {
+    {items.map((value) => {
       const labelId = `checkbox-list-label-${value}`;
       return (
           <ListItem
@@ -36,6 +24,14 @@ const TodoList = () => {
     })}
   </List>
   );
+};
+
+TodoList.propTypes = {
+  items: PropTypes.array.isRequired,
+};
+
+TodoList.defaultProps = {
+  items: []
 };
 
 export default TodoList;

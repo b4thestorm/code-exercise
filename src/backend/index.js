@@ -29,6 +29,24 @@ app.get('/todos', (req, res) => {
   })
 });
 
+app.post('/todo', (req, res) => {
+  const description = req.body.data.description ? req.body.data.description : '';
+  const status = req.body.data.status ? req.body.data.status : '';
+
+  if (!description) {
+    return res.json({success: false, message: 'description is required'});
+  }
+
+  db('todos')
+    .insert({description, status})
+    .then((id) => {
+      return  res.json({success: true, message: 'todo was successfully added'});
+    }).catch((err) => {
+    console.error(err);
+    return res.json({success: false, message: 'An error occurred, please try again later.'});
+  });
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

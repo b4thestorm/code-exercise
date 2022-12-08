@@ -3,11 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const port = 4000;
 
-//initialize knex
-const knexConfig = require('./db/knexfile');
-const knex = require('knex')(knexConfig[process.env.NODE_ENV])
-
-
 const app = express();
 
 async function listTables() {
@@ -18,8 +13,20 @@ async function listTables() {
 
 app.use(bodyParser.json());
 
-app.get('/add-todo', (req, res) => {
-  res.send('Hello World!');
+app.get('/todos', (req, res) => {
+  db('todos')
+  .select({
+    id: 'id',
+    description: 'description',
+    status: 'status' 
+  })
+  .then((todos) => {
+    return res.json(todos);
+  })
+  .catch((err) => {
+    console.error(err);
+    return res.json({success: false, message: 'An error occurred, please try again later.'});
+  })
 });
 
 app.listen(port, () => {
